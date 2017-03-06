@@ -1,4 +1,4 @@
-# 02-router
+# 01-gulp
 
 ## Assignment
 
@@ -13,11 +13,11 @@ npm install
 ## Dev
 
 ```bash
-grunt start
+gulp start
 ```
 
 ## Build
 
 ```bash
-grunt
+gulp
 ```
