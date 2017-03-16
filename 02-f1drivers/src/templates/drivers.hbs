@@ -1,0 +1,17 @@
+<h2>Drivers</h2>
+<table class="table table-hover">
+  <thead>
+  <td>Vorname</td>
+  <td>Nachname</td>
+  <td>Geburtsdatum</td>
+  <td>Wikipedia</td>
+  </thead>
+  {{#each Drivers}}
+    <tr>
+      <td><a href="/drivers/{{this.driverId}}">{{this.givenName}}</a></td>
+      <td><a href="/drivers/{{this.driverId}}">{{this.familyName}}</a></td>
+      <td>{{this.dateOfBirth}}</td>
+      <td><a href="{{this.url}}">Link</a></td>
+    </tr>
+  {{/each}}
+</table>
