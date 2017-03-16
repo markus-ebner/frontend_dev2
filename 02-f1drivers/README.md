@@ -1,9 +1,8 @@
-# 02-router
+# 02-f1drivers
 
 ## Assignment
 
-* Implement a router with pop and push state
-
+* Show Drivers and Constructors of Formula 1 with fetch
 ## Setup
 
 ```bash
