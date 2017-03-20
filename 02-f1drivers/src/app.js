@@ -17,7 +17,7 @@ function index() {
 }
 
 function constructors() {
-  fetch(config.url + `/constructors.json`)
+  fetch(config.url + `/constructors.json?limit=500`)
     .then(function(response) {
       return response.json();
     })
@@ -27,7 +27,7 @@ function constructors() {
 }
 
 function drivers() {
-  fetch(config.url + `/drivers.json`)
+  fetch(config.url + `/drivers.json?limit=500`)
     .then(function(response) {
       return response.json();
     })
@@ -40,11 +40,57 @@ function notFound() {
   $app.html(notFoundTpl());
 }
 
-function driver() {
-
+function driver(context) {
+  fetch(config.url + `/drivers/${context.params.id}.json`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(driverData) {
+      return GetConstByDriv(context.params.id)
+        .then(function(constructorsData) {
+          return {
+            driver: driverData.MRData.DriverTable.Drivers[0],
+            constructors: constructorsData.MRData.ConstructorTable.Constructors
+          };
+        });
+    })
+    .then(function(data) {
+      console.log(data);
+      $app.html(driverTpl(data));
+    });
 }
-function constructor() {
 
+function GetConstByDriv(driverId) {
+  return fetch(config.url + `/drivers/${driverId}/constructors.json`)
+    .then(function(response) {
+      return response.json();
+    })
+}
+
+function constructor(context) {
+  fetch(config.url + `/constructors/${context.params.id}.json`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(constructorsData) {
+      return GetDriveByConst(context.params.id)
+        .then(function(driversData) {
+          return {
+            drivers: driversData.MRData.DriverTable.Drivers,
+            constructor: constructorsData.MRData.ConstructorTable.Constructors[0]
+          };
+        })
+    })
+    .then(function(data) {
+      console.log(data);
+      $app.html(constructorTpl(data));
+    });
+}
+function GetDriveByConst(constructorId) {
+  return fetch(config.url + `/constructors/${constructorId}/drivers.json`)
+    .then(function(response) {
+      return response.json();
+    })
 }
 
 router('/', index);
