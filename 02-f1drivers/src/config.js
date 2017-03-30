@@ -3,5 +3,5 @@
  */
 export default
 {
-  url: 'http://ergast.com/api/f1'
+  url: 'http://ergast.com/api/f1/'
 };

@@ -2,8 +2,11 @@
 <a href="{{constructor.url}}">Wikipedia Link</a>
 
 <h3>Drivers</h3>
-<ul class="list">
+
+<table class="table table-hover">
+  {{> driverTableHeadPartial }}
   {{#each drivers}}
-    <li><a href="/drivers/{{this.driverId}}">{{this.givenName}} {{this.familyName}}</a></li>
+    {{> driverPartial }}
   {{/each}}
-</ul>
+</table>
+

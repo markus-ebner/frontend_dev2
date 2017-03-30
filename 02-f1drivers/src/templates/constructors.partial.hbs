@@ -1,0 +1,14 @@
+<table class="table table-hover">
+  <thead>
+  <td>Name</td>
+  <td>Nationalität</td>
+  <td>Wikipedia</td>
+  </thead>
+  {{#each constructors}}
+  <tr>
+    <td><a href="/constructors/{{this.constructorId}}">{{this.name}}</a></td>
+    <td>{{this.nationality}}</td>
+    <td><a href="{{this.url}}">Wikilink</a></td>
+  </tr>
+  {{/each}}
+</table>

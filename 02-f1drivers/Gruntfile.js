@@ -41,7 +41,7 @@ module.exports = function(grunt) {
           hostname: '0.0.0.0',
           livereload: true,
           open: true,
-          port: 3000,
+          port: 8000,
           middleware: (connect, options) => {
             const middlewares = []
 

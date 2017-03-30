@@ -7,32 +7,31 @@ import driversTpl from './templates/drivers.hbs';
 import constructorTpl from './templates/constructor.hbs';
 import constructorsTpl from './templates/constructors.hbs';
 import notFoundTpl from './templates/not-found.hbs';
-
+import * as register from './register';
+import fetchi from './fetch';
 
 const $app = $('#app');
+const limit = 10;
+let offset = 0;
 
+register.registerHelpers();
+register.registerPartials();
 
 function index() {
   $app.html(homeTpl());
 }
 
 function constructors() {
-  fetch(config.url + `/constructors.json?limit=500`)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      $app.html(constructorsTpl(json.MRData.ConstructorTable));
+  fetchi.etchi('constructors', null, {limit: limit, offset: offset})
+    .then((data) => {
+      $app.html(constructorsTpl({constructors:data}));
     });
 }
 
 function drivers() {
-  fetch(config.url + `/drivers.json?limit=500`)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      $app.html(driversTpl(json.MRData.DriverTable));
+  fetchi.etchi('drivers', null, {limit: limit, offset: offset})
+    .then((data) => {
+      $app.html(driversTpl({drivers:data}));
     });
 }
 
@@ -41,7 +40,9 @@ function notFound() {
 }
 
 function driver(context) {
-  fetch(config.url + `/drivers/${context.params.id}.json`)
+  //fetchi.etchi('drivers',context.params.id);
+
+  fetch(config.url + `drivers/${context.params.id}.json`)
     .then(function(response) {
       return response.json();
     })
@@ -61,14 +62,14 @@ function driver(context) {
 }
 
 function GetConstByDriv(driverId) {
-  return fetch(config.url + `/drivers/${driverId}/constructors.json`)
+  return fetch(config.url + `drivers/${driverId}/constructors.json`)
     .then(function(response) {
       return response.json();
     })
 }
 
 function constructor(context) {
-  fetch(config.url + `/constructors/${context.params.id}.json`)
+  fetch(config.url + `constructors/${context.params.id}.json`)
     .then(function(response) {
       return response.json();
     })
@@ -87,7 +88,7 @@ function constructor(context) {
     });
 }
 function GetDriveByConst(constructorId) {
-  return fetch(config.url + `/constructors/${constructorId}/drivers.json`)
+  return fetch(config.url + `constructors/${constructorId}/drivers.json`)
     .then(function(response) {
       return response.json();
     })
