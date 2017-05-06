@@ -5,4 +5,10 @@ body {
 
 .money img {
     height: 100px;
+    float: left;
+}
+
+.make-money {
+    display: block;
+    height: 100px;
 }

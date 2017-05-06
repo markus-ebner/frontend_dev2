@@ -27,27 +27,29 @@ class Bank extends React.Component {
 
     render() {
         let hint;
-        let src;
-        if(this.state.tooMuchMoneyToHold)
+        let src = "money-bag.png";
+        let moveAllowed = false;
+        if (this.state.tooMuchMoneyToHold)
             hint = "You have no hands free for another bag of money! You have to bring money to the safe!";
-        console.log(this.state.hands.length);
-        if(this.state.hands.length === 0)
-            src = "open-money-bag.png";
-        else
-            src = "money-bag.png";
+
+        if (this.state.hands.length === 0)
+            moveAllowed = true;
 
         return (
             <div className="bank">
                 <button
                     disabled={ this.state.tooMuchMoneyToHold } onClick={this.addMoneyBag}>Make money
                 </button>
-                <button onClick={ this.moveMoneyBag } >Transfer money to the safe</button>
+                <button
+                    disabled={ moveAllowed } onClick={ this.moveMoneyBag } >Transfer money to the safe
+                </button>
                 <p className="hint">{hint}</p>
                 <Heading value="Make money money, make money money money!" />
                 <div className="make-money">
+                    <Money value={"Main Money"} src={"open-money-bag.png"}/>
                     {
                         this.state.hands.map((idx) => {
-                            return <Money value={idx} src={src}/>
+                            return <Money value={"hand"+idx} src={src}/>
                         })
                     }
                 </div>
@@ -55,7 +57,7 @@ class Bank extends React.Component {
                 <div className="safe">
                     {
                         this.state.safe.map((idx) => {
-                            return <Money value={idx} src={src}/>
+                            return <Money value={"safe"+idx} src={src}/>
                         })
                     }
                 </div>
@@ -65,18 +67,18 @@ class Bank extends React.Component {
 
     addMoneyBag = () => {
         this.setState({
-            hands: ([...this.hands].push(this.hands.length+1)),
-            safe: this.safe,
-            tooMuchMoneyToHold: (this.hands.length > 6)
+            hands: [...this.state.hands, this.state.hands.length+1],
+            safe: this.state.safe,
+            tooMuchMoneyToHold: (this.state.hands.length >= 6)
         });
     };
+
     moveMoneyBag = () => {
-        if(this.hands.length > 0)
-            this.setState({
-                hands: ([...this.hands].pop()),
-                safe: ([...this.safe].push(this.safe.length+1)),
-                tooMuchMoneyToHold: this.tooMuchMoneyToHold
-            });
+        this.setState({
+            hands: [...this.state.hands].splice(0, this.state.hands.length-1),
+            safe: [...this.state.safe, this.state.safe.length + 1],
+            tooMuchMoneyToHold: (this.state.hands.length -2 >= 6)
+        });
     };
 }
 
