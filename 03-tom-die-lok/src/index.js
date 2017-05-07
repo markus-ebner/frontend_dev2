@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './index.css';
 
 class Money extends React.Component {
@@ -85,10 +86,25 @@ class Bank extends React.Component {
     };
 }
 
+
+class Home extends React.Component {
+    render() {
+        return (
+            <div>
+                <Heading value="Homescreen" />
+            </div>
+        )
+    }
+}
 // ========================================
 
 ReactDOM.render(
-    <Bank />,
+    <Router>
+        <div>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/money" component={Bank} />
+        </div>
+    </Router>,
     document.getElementById('root')
 );
 

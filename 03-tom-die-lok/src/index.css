@@ -12,3 +12,16 @@ body {
     display: block;
     height: 100px;
 }
+
+#nav {
+    border-bottom: 1px solid darkgray;
+    padding: 20px;
+    background-color: #ededed;
+}
+#nav button {
+    background-color: whitesmoke;
+}
+.bank button {
+    background-color: greenyellow;
+    margin-top: 10px;
+}
